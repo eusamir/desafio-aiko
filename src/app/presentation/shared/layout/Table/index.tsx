@@ -6,6 +6,7 @@ export const Table = {
   TableBody: S.TableBody,
   Header: S.Header,
   Row: S.Row,
+  RowHeader: S.RowHeader,
   Data: S.Data,
   ActionColumnTH: S.ActionColumnTH,
   ActionColumnTD: S.ActionColumnTD

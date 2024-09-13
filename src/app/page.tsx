@@ -1,4 +1,4 @@
-import TableSection from "./presentation/modules/TableSection/TableSection";
+import TableSection from "./presentation/modules/TableSection";
 
 export default function Home() {
   return (

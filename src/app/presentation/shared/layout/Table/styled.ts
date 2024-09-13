@@ -40,6 +40,14 @@ export const Row = styled.tr`
   font-size: 2rem;
   font-weight: 400;
   justify-content: space-between;
+  cursor: pointer;
+`
+export const RowHeader = styled.tr`
+  background: white;
+  border-top: 1px solid #E1E1E1;
+  font-size: 2rem;
+  font-weight: 400;
+  justify-content: space-between;
 `
 export const Data = styled.td`
   padding: 1.9rem 3.5rem;
