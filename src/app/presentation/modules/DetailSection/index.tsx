@@ -112,8 +112,7 @@ function calculateEquipmentProduction(equipments: Equipment[]) {
             totalHours: 0,
             operationalHours: 0
         });
-
-        // Calcula a produtividade como percentual
+        
         const productivity = (operationalHours / totalHours) * 100;
 
         return productivity.toFixed(2);
