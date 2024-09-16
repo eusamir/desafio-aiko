@@ -50,50 +50,40 @@ async function getLocation(params: string){
 
 function calculateEquipmentGains(equipments: Equipment[]) {
     return equipments.map(equipment => {
-        const states = equipment.states;
+        const { operatingGain, maintenanceGain, stopedGain } = equipment.states.reduce((acc, currentState, index, array) => {
+            if (index === array.length - 1) return acc;
 
+            const nextState = array[index + 1];
 
-        let operatingTime = 0; // Tempo total em que o equipamento esteve "Operando"
-        let maintenanceTime = 0; // Tempo total em que o equipamento esteve em "Manutenção"
-        let stopedTime = 0; // Tempo total em que o equipamento esteve em "Parado"
-
-        let operatingGain = 0; // Acumulador do ganho enquanto estava "Operando"
-        let maintenanceGain = 0; // Acumulador do ganho enquanto estava em "Manutenção"
-        let stopedGain = 0; // Tempo total em que o equipamento esteve em "Parado"
-
-        // Itera sobre os estados para calcular o tempo e ganho de cada tipo de estado
-        for (let i = 0; i < states.length - 1; i++) {
-            const currentState = states[i];
-            const nextState = states[i + 1];
-
-            // Calcula a diferença de tempo entre os dois estados em horas
             const currentDate = new Date(currentState.date);
             const nextDate = new Date(nextState.date);
-            const timeDifference = (nextDate.getTime() - currentDate.getTime()) / (1000 * 60 * 60); // Em horas
 
-            // Verifica o estado atual e acumula o tempo e ganho para cada estado
+            const timeDifference = (nextDate.getTime() - currentDate.getTime()) / (1000 * 60 * 60);
+
             if (currentState.activeState === "Operando") {
-                operatingTime += timeDifference;
-                operatingGain += timeDifference * currentState.price.value;
+                acc.operatingTime += timeDifference;
+                acc.operatingGain += timeDifference * currentState.price.value;
             } else if (currentState.activeState === "Manutenção") {
-                maintenanceTime += timeDifference;
-                maintenanceGain += timeDifference * currentState.price.value;
-            }else{
-                stopedTime += timeDifference;
-                stopedGain += timeDifference * currentState.price.value;
+                acc.maintenanceTime += timeDifference;
+                acc.maintenanceGain += timeDifference * currentState.price.value;
+            } else {
+                acc.stopedTime += timeDifference;
+                acc.stopedGain += timeDifference * currentState.price.value;
             }
-        }
 
-        // Calcula o ganho total somando os ganhos de cada estado
-        const totalGain = (operatingGain) + (maintenanceGain) + (stopedGain);
+            return acc;
+        }, {
+            operatingTime: 0,
+            maintenanceTime: 0,
+            stopedTime: 0,
+            operatingGain: 0,
+            maintenanceGain: 0,
+            stopedGain: 0,
+        });
+
+        const totalGain = operatingGain + maintenanceGain + stopedGain;
 
         return {
-            equipmentId: equipment.equipmentId,
-            operatingTime: operatingTime.toFixed(2),
-            maintenanceTime: maintenanceTime.toFixed(2),
-            opGain: operatingGain,
-            manuGain: maintenanceGain,
-            stopGain: stopedGain,
             totalGain: totalGain.toFixed(2)
         };
     });
@@ -101,33 +91,35 @@ function calculateEquipmentGains(equipments: Equipment[]) {
 
 function calculateEquipmentProduction(equipments: Equipment[]) {
     return equipments.map(equipment => {
-        let totalHours = 0;
-        let operationalHours = 0;
+        const { totalHours, operationalHours } = equipment.states.reduce((acc, currentState, index, array) => {
+            if (index === array.length - 1) return acc;
 
-        const states = equipment.states;
+            const nextState = array[index + 1];
 
-        for (let i = 0; i < states.length - 1; i++) {
-            const currentState = states[i];
-            const nextState = states[i + 1];
-
-            // Calcula a diferença de tempo entre os dois estados em horas
+            
             const currentDate = new Date(currentState.date);
             const nextDate = new Date(nextState.date);
-            const timeDifference = (nextDate.getTime() - currentDate.getTime()) / (1000 * 60 * 60); // Em horas
+            const timeDifference = (nextDate.getTime() - currentDate.getTime()) / (1000 * 60 * 60);
 
-            totalHours += timeDifference;
+            acc.totalHours += timeDifference;
 
             if (currentState.activeState === "Operando") {
-                operationalHours += timeDifference;
+                acc.operationalHours += timeDifference;
             }
-        }
+
+            return acc;
+        }, {
+            totalHours: 0,
+            operationalHours: 0
+        });
 
         // Calcula a produtividade como percentual
         const productivity = (operationalHours / totalHours) * 100;
 
-        return productivity.toFixed(2)
+        return productivity.toFixed(2);
     });
 }
+
 export default async function DetailSection({params}: ProductProps){
 
     const product = await getProduct(params.id)
@@ -144,7 +136,7 @@ export default async function DetailSection({params}: ProductProps){
     const teste = calculateEquipmentProduction(product)
 
 
-    console.log(teste)
+    console.log(totalGains)
 
 
 
