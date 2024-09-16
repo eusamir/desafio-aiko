@@ -1,51 +1,31 @@
 import Header from "../../shared/layout/Header";
-import { Table } from "../../shared/layout/Table";
+import TableEquipment from "../../shared/layout/Table";
 import * as S from './styled'
+import { api } from "../../../../../data/api";
+import TableHeader from "../../shared/layout/Table/TableHeader";
 
-export default function TableSection(){
+async function getProduct(){
+  const response = await api(`/equipments/`, {
+    next: {
+      revalidate: 60 * 60,
+    },
+  })
+
+  const product = await response.json()
+
+  return product
+}
+
+export default async function TableSection(){
+  const product = await getProduct()
+  
+
   return(
     <>
       <Header/>
-      <S.TableHeader>
-        <S.Title>Painel de gerenciamento</S.Title>
-        <S.SearchContainer>
-          <div>
-            <S.SelectFilter>
-            <FadersHorizontal size={32} />
-              Filtrar
-            </S.SelectFilter>
-          </div>
-          <div>
-            <input type="text" name="" id="" />
-            <button>lupa</button>
-          </div>
-        </S.SearchContainer>
-      </S.TableHeader>
+      <TableHeader/>
       <S.TableContainer>
-
-        <Table.DesktopTable>
-          <Table.Head>
-            <Table.RowHeader>
-              <Table.ActionColumnTH className="action-column">
-              Nome
-              </Table.ActionColumnTH>
-              <Table.Header></Table.Header>
-              <Table.Header></Table.Header>
-              <Table.Header></Table.Header>
-              <Table.Header>Estado</Table.Header>
-            </Table.RowHeader>
-          </Table.Head>
-          <Table.TableBody>
-              <Table.Row key={ 'teste'}>
-                <Table.Data className="action-column">
-                teste
-                </Table.Data>
-                <Table.Data>
-                  Operando
-                </Table.Data>
-              </Table.Row>
-          </Table.TableBody>
-        </Table.DesktopTable>
+        <TableEquipment equipment={product}/>
       </S.TableContainer>
     </>
   )

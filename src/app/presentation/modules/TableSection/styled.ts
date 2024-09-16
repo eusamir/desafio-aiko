@@ -2,27 +2,34 @@
 
 import styled from "styled-components"
 
-export const TableHeader = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 74rem;
-  margin-top: 3rem;
+
+export const Input = styled.input`
+  padding: 1rem;
+  border: 2px solid #B3B2B8;
+  position: relative;
+  border-radius: 1rem 0rem 0rem 1rem;
+  
+  &::placeholder{
+    color: #B3B2B8;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
 `
-export const Title = styled.h1`
-  font-size: 3rem;
-`
-export const SearchContainer = styled.div`
-  display: flex;
-  gap: 1rem;
-`
-export const SelectFilter = styled.button`
-  padding: 1.2rem;
-  width: 10rem;
-  border: none;
-  border-radius: 0.8rem;
+export const Button = styled.button`
+  background-color: #003184;
+  padding: 0.75rem;
+  border: 1px solid #E1E1E1;
   cursor: pointer;
-  color: #B3B2B8;
+  border-radius: 0rem 1rem 1rem 0rem;
+  position: absolute;
+  margin-left: -1rem;
+  margin-top: -0.1rem;
+  &:hover{
+    filter: brightness(0.8);
+  }
+`
+export const InputSearch = styled.div`
+  display: block;
 `
 
 export const TableContainer = styled.div`
