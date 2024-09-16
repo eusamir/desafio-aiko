@@ -25,12 +25,12 @@ export async function GET(
 
       const priceOperating = earnysPerHour.find((e) => e.name);
 
-      const teste = priceOperating?.hourlyEarnings.find(e=> e.equipmentStateId === state.equipmentStateId)
+      const price = priceOperating?.hourlyEarnings.find(e=> e.equipmentStateId === state.equipmentStateId)
 
       return {
         ...state,
         activeState: stateType?.name,
-        price: teste
+        price: price
       };
     });
 

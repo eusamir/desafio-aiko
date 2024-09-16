@@ -132,9 +132,7 @@ export default async function DetailSection({params}: ProductProps){
     
     const totalGains = gains.map((gain) => gain.totalGain)
 
-    const teste = calculateEquipmentProduction(product)
-
-    console.log(teste)
+    const productivity = calculateEquipmentProduction(product)
 
 
 
@@ -150,7 +148,7 @@ export default async function DetailSection({params}: ProductProps){
             <Map local={activeLocation} positions={positions}/>
             <S.Title>Histórico do equipamento</S.Title>
             <h1>Ganho total: R${totalGains}</h1>
-            <h1>Produtividade: {teste}%</h1>
+            <h1>Produtividade: {productivity}%</h1>
             <TableHistory equipment={product}/>
         </S.Container>
     )
