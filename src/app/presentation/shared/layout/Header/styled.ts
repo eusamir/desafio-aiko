@@ -10,6 +10,6 @@ export const Container = styled.div`
   border-bottom: 2px solid #E1E1E1;
 
   & img{
-    margin-right: 8rem;
+    margin-right: 25rem;
   }
 `
