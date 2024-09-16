@@ -15,7 +15,7 @@ const backgroundColor = (status:string) => {
     case 'Parado':
       return '#FFE2E7';
     default:
-      return 'gray'; // cor padrão caso o status não seja reconhecido
+      return 'gray'; 
   }
 };
 
@@ -28,7 +28,7 @@ const colorText = (status:string) => {
     case 'Parado':
       return '#BE1634';
     default:
-      return 'gray'; // cor padrão caso o status não seja reconhecido
+      return 'gray'; 
   }
 };
 
