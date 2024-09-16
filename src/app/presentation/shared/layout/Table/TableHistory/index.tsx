@@ -17,6 +17,8 @@ export default function TableHistory({ equipment }: EquipmentProps) {
       <S.RowHeader>
         <S.ActionColumnTH>Data</S.ActionColumnTH>
         <S.Header></S.Header>
+        <S.Header></S.Header>
+        <S.Header></S.Header>
         <S.ActionColumnTH className="action-column">
           Estado
         </S.ActionColumnTH>

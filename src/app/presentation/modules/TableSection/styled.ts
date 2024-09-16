@@ -34,6 +34,8 @@ export const InputSearch = styled.div`
 
 export const TableContainer = styled.div`
   display: flex;
+  flex-direction: column;
+  gap: 5rem;
   justify-content: center;
   align-items: center;
   margin-top: 4rem;
