@@ -24,7 +24,7 @@ interface ProductProps {
     states: State[];
 }
 
-async function getProduct(params: string){
+export async function getProduct(params: string){
     const response = await api(`/equipments/${params}/`, {
     next: {
         revalidate: 60 * 60,
@@ -36,7 +36,7 @@ async function getProduct(params: string){
     return product
 }
 
-async function getLocation(params: string){
+export async function getLocation(params: string){
     const response = await api(`/locations/${params}/`, {
     next: {
         revalidate: 60 * 60,

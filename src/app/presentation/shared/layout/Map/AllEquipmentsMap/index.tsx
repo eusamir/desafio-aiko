@@ -29,8 +29,6 @@ interface MapProps {
 
 export default function AllEquipmentsMap({ locationInfo }: MapProps) {
 
-    console.log(locationInfo.map(e=> e.nameEquipment))
-
     const getMarkerIcon = (nameEquipment: string) => {
         if (nameEquipment[0].includes('CA')) {
           return new L.Icon({

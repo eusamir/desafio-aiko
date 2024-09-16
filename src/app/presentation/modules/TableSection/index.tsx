@@ -5,7 +5,7 @@ import { api } from "../../../../../data/api";
 import TableHeader from "../../shared/layout/Table/TableHeader";
 import dynamic from "next/dynamic";
 
-async function getProduct(){
+export async function getProduct(){
   const response = await api(`/equipments/`, {
     next: {
       revalidate: 60 * 60,
@@ -17,7 +17,7 @@ async function getProduct(){
   return product
 }
 
-async function getLocation(){
+export async function getLocation(){
   const response = await api(`/locations/`, {
     next: {
       revalidate: 60 * 60,
