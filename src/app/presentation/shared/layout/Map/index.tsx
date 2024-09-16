@@ -1,9 +1,7 @@
-'use client'
+'use client';
 
-import { useEffect, useState } from 'react';
-
-import L, { LatLngExpression } from 'leaflet'
-import { MapContainer, TileLayer, Marker } from 'react-leaflet'
+import L from 'leaflet';
+import { MapContainer, TileLayer, Marker, Polyline, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 
 import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
@@ -11,44 +9,65 @@ import markerIcon from 'leaflet/dist/images/marker-icon.png';
 import markerShadow from 'leaflet/dist/images/marker-shadow.png';
 import React from 'react';
 
+import * as S from './styled';
+import { MapPinSimple } from '@phosphor-icons/react';
+
 L.Icon.Default.mergeOptions({
   iconUrl: markerIcon.src,
   iconRetinaUrl: markerIcon2x.src,
   shadowUrl: markerShadow.src,
-})
+});
 
-interface MapProps{
-  local:{
-    x: number
-    y:number
-  }
+interface Position {
+  lat: number;
+  lon: number;
+  date: string
 }
 
-export default function Map({ local }: MapProps) {
-  const [andress, setAndress] = useState<[number, number] | []>([])
+interface MapProps {
+  local: {
+    lat: number;
+    lon: number;
+  };
+  positions: Position[];
+}
 
-  useEffect(() => {
-    const fecth = async () => {
-      try {
-        setAndress([local.x, local.y,])
-        console.log(andress)
-      } catch (err) {
-        console.log(err)
-      }
-    }
-    fecth()
-  }, [])
+const routeMarkerIcon = new L.Icon({
+  iconUrl: '/images/map-pin-fill.svg',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowUrl: markerShadow.src,
+  shadowSize: [41, 41],
+});
 
-  return(
-    <div>
-      <MapContainer scrollWheelZoom={true} center={andress as LatLngExpression} zoom={16} style={{ height: '100vh', width: '100wh' }}>
+export default function Map({ local, positions }: MapProps) {
+  
+  const polylinePositions: [number, number][] = positions.map((position) => [position.lat, position.lon]);
+
+
+  return (
+    <S.Container>
+      <MapContainer scrollWheelZoom={true} center={[local.lat, local.lon]} zoom={16} style={{ height: '100vh', width: '100vw' }}>
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <Marker position={andress as LatLngExpression}>
-        </Marker>
+        <Polyline positions={polylinePositions} color="#B3B2B8" />
+
+        {positions.map((position, index) => (
+          <Marker
+          key={index}
+          position={[position.lat, position.lon]} 
+          icon={routeMarkerIcon}
+          >
+            <Popup>{new Date(position.date).toLocaleDateString()}</Popup>
+          </Marker>
+        ))}
+        <S.ActivePosition>
+          <Marker position={[local.lat, local.lon]}></Marker>
+        </S.ActivePosition>
       </MapContainer>
-    </div>
-  )
+    </S.Container>
+  );
 }
