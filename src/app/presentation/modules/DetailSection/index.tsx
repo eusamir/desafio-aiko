@@ -14,13 +14,13 @@ interface ProductProps {
     date: string;
     activeState: 'Operando' | 'Manutenção' | 'Parado';
     price: {
-        equipmentStateId: string;
+        equipmentStateId?: string;
         value: number;
     };
 }
 
   interface Equipment {
-    equipmentId: string;
+    equipmentId?: string;
     states: State[];
 }
 
@@ -48,7 +48,7 @@ async function getLocation(params: string){
     return product
 } 
 
-function calculateEquipmentGains(equipments: Equipment[]) {
+export function calculateEquipmentGains(equipments: Equipment[]) {
     return equipments.map(equipment => {
         const { operatingGain, maintenanceGain, stopedGain } = equipment.states.reduce((acc, currentState, index, array) => {
             if (index === array.length - 1) return acc;
@@ -89,7 +89,7 @@ function calculateEquipmentGains(equipments: Equipment[]) {
     });
 }
 
-function calculateEquipmentProduction(equipments: Equipment[]) {
+export function calculateEquipmentProduction(equipments: Equipment[]) {
     return equipments.map(equipment => {
         const { totalHours, operationalHours } = equipment.states.reduce((acc, currentState, index, array) => {
             if (index === array.length - 1) return acc;
@@ -134,8 +134,7 @@ export default async function DetailSection({params}: ProductProps){
 
     const teste = calculateEquipmentProduction(product)
 
-
-    console.log(totalGains)
+    console.log(teste)
 
 
 
