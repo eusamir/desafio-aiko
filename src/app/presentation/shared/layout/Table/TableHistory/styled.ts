@@ -72,7 +72,6 @@ export const Row = styled.tr`
   font-size: 2rem;
   font-weight: 400;
   justify-content: space-between;
-  cursor: pointer;
 `
 export const RowHeader = styled.tr`
   background: white;

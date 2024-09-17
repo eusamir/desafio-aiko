@@ -1,5 +1,5 @@
 'use client'
-import { useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import * as S from './styled'
 
 interface EquipmentProps{
@@ -15,6 +15,7 @@ interface EquipmentProps{
 
 export default function TableEquipment({equipment}: EquipmentProps){
   const searchParams = useSearchParams()
+  const router = useRouter()
   const placeName = searchParams.getAll("search")
   const filteredSearch = placeName[0]
   ? equipment.filter((search) => {
@@ -22,6 +23,10 @@ export default function TableEquipment({equipment}: EquipmentProps){
       return searchText.includes(placeName[0].toLowerCase());
     })
   : equipment;
+
+  function handleOnClick(id:string ){
+    router.push(`/${id}`)
+  }
 
   return(
     <S.Table>
@@ -41,11 +46,9 @@ export default function TableEquipment({equipment}: EquipmentProps){
     <S.TableBody>
       {filteredSearch.map(e=>{
       return(
-        <S.Row key={e.id}>
+        <S.Row key={e.id} onClick={()=>handleOnClick(e.id)}>
             <S.Data className="action-column">
-              <a href={`/${e.id}`}>
                 {e.name}
-              </a>
             </S.Data>
             <S.Data>
               {e.modelName}

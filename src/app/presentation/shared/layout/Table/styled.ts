@@ -73,6 +73,9 @@ export const Row = styled.tr`
   font-weight: 400;
   justify-content: space-between;
   cursor: pointer;
+  &:hover{
+    filter: brightness(0.9);
+  }
 `
 export const RowHeader = styled.tr`
   background: white;
