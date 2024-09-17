@@ -1,6 +1,6 @@
 'use client'
 
-import styled, { keyframes } from "styled-components"
+import styled, { keyframes } from 'styled-components'
 
 const bounce = keyframes`
   from {
@@ -10,7 +10,6 @@ const bounce = keyframes`
     transform: translate(0, 0);
   }
 `
-
 
 export const LoadingContainer = styled.div`
   display: flex;

@@ -6,33 +6,31 @@ interface typeStatus {
   $status: string
 }
 
-const backgroundColor = (status:string) => {
+const backgroundColor = (status: string) => {
   switch (status) {
     case 'Operando':
-      return '#C9F1E8';
+      return '#C9F1E8'
     case 'Manutenção':
-      return '#FFEFD6';
+      return '#FFEFD6'
     case 'Parado':
-      return '#FFE2E7';
+      return '#FFE2E7'
     default:
-      return 'gray'; 
+      return 'gray'
   }
-};
+}
 
-const colorText = (status:string) => {
+const colorText = (status: string) => {
   switch (status) {
     case 'Operando':
-      return '#008767';
+      return '#008767'
     case 'Manutenção':
-      return '#A44900';
+      return '#A44900'
     case 'Parado':
-      return '#BE1634';
+      return '#BE1634'
     default:
-      return 'gray'; 
+      return 'gray'
   }
-};
-
-
+}
 
 export const Table = styled.table`
   border-collapse: collapse;
@@ -40,8 +38,8 @@ export const Table = styled.table`
 
   width: 70%;
   table-layout: fixed;
-  color: #B3B2B8;
-  border: 1px solid #E1E1E1;
+  color: #b3b2b8;
+  border: 1px solid #e1e1e1;
 
   tr {
     display: flex;
@@ -61,25 +59,25 @@ export const Header = styled.th`
   align-items: center;
   flex: 0 0 auto;
   width: 20%;
-  background: #F0F0F0;
-  border: 1px solid #F0F0F0;
+  background: #f0f0f0;
+  border: 1px solid #f0f0f0;
   font-size: 2rem;
   font-weight: 700;
 `
 export const Row = styled.tr`
   background: white;
-  border-top: 1px solid #E1E1E1;
+  border-top: 1px solid #e1e1e1;
   font-size: 2rem;
   font-weight: 400;
   justify-content: space-between;
   cursor: pointer;
-  &:hover{
+  &:hover {
     filter: brightness(0.9);
   }
 `
 export const RowHeader = styled.tr`
   background: white;
-  border-top: 1px solid #E1E1E1;
+  border-top: 1px solid #e1e1e1;
   font-size: 2rem;
   font-weight: 400;
   justify-content: space-between;
@@ -102,13 +100,13 @@ export const ActionColumnTH = styled(Header)`
 `
 export const ActionColumnTD = styled(Data)`
   gap: 1.2rem;
-  color: #3A4559;
+  color: #3a4559;
   font-weight: 500;
-  font-size:2rem;
+  font-size: 2rem;
 `
 export const Tag = styled.div<typeStatus>`
-  background-color: ${(props) => backgroundColor(props.$status)};
+  background-color: ${props => backgroundColor(props.$status)};
   padding: 0.8rem;
   border-radius: 1rem;
-  color: ${(props) => colorText(props.$status)};
+  color: ${props => colorText(props.$status)};
 `

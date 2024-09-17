@@ -1,15 +1,16 @@
-import Header from "../../shared/layout/Header";
-import TableEquipment from "../../shared/layout/Table";
+import dynamic from 'next/dynamic'
+
+import { api } from '../../../../../data/api'
+import Header from '../../shared/layout/Header'
+import TableEquipment from '../../shared/layout/Table'
+import TableHeader from '../../shared/layout/Table/TableHeader'
 import * as S from './styled'
-import { api } from "../../../../../data/api";
-import TableHeader from "../../shared/layout/Table/TableHeader";
-import dynamic from "next/dynamic";
 
-export async function getProduct(){
-  const response = await api(`/equipments/`, {
+export async function getProduct() {
+  const response = await api('/equipments/', {
     next: {
-      revalidate: 60 * 60,
-    },
+      revalidate: 60 * 60
+    }
   })
 
   const product = await response.json()
@@ -17,11 +18,11 @@ export async function getProduct(){
   return product
 }
 
-export async function getLocation(){
-  const response = await api(`/locations/`, {
+export async function getLocation() {
+  const response = await api('/locations/', {
     next: {
-      revalidate: 60 * 60,
-    },
+      revalidate: 60 * 60
+    }
   })
 
   const product = await response.json()
@@ -29,25 +30,26 @@ export async function getLocation(){
   return product
 }
 
-export default async function TableSection(){
+export default async function TableSection() {
   const product = await getProduct()
 
   const location = await getLocation()
 
-  const AllEquipmentsMap = dynamic(() => import("../../shared/layout/Map/AllEquipmentsMap"), {
-    ssr: false,
-    loading: () => <p>Carregando...</p>,
-});
+  const AllEquipmentsMap = dynamic(
+    () => import('../../shared/layout/Map/AllEquipmentsMap'),
+    {
+      ssr: false,
+      loading: () => <p>Carregando...</p>
+    }
+  )
 
-  
-
-  return(
+  return (
     <>
-      <Header/>
-      <TableHeader/>
+      <Header />
+      <TableHeader />
       <S.TableContainer>
-        <AllEquipmentsMap locationInfo={location}/>
-        <TableEquipment equipment={product}/>
+        <AllEquipmentsMap locationInfo={location} />
+        <TableEquipment equipment={product} />
       </S.TableContainer>
     </>
   )
