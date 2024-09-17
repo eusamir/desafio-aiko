@@ -9,7 +9,7 @@ export default function BackToHomeButton() {
       <Link href={'/'}>
         <CaretLeft size={32} color="#003184" />
       </Link>
-      <h1>Inicio</h1>
+      <h1>Início</h1>
     </S.Container>
   )
 }
