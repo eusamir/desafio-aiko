@@ -10,6 +10,12 @@ export const Container = styled.div`
 `
 export const Title = styled.h1`
     font-size: 2.8rem;
-    padding: 2rem;
-    padding-right: 98rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+`
+export const HeaderTableContainer = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 70%;
 `

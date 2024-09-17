@@ -4,6 +4,7 @@ import { api } from "../../../../../data/api";
 import TableHistory from "../../shared/layout/Table/TableHistory";
 import dynamic from "next/dynamic";
 import * as S from './styled'
+import BackToHomeButton from "../../shared/layout/BackToHomeButton";
 
 interface ProductProps {
     params: {
@@ -84,7 +85,7 @@ export function calculateEquipmentGains(equipments: Equipment[]) {
         const totalGain = operatingGain + maintenanceGain + stopedGain;
 
         return {
-            totalGain: totalGain.toFixed(2)
+            totalGain: totalGain
         };
     });
 }
@@ -134,6 +135,10 @@ export default async function DetailSection({params}: ProductProps){
 
     const productivity = calculateEquipmentProduction(product)
 
+    const formatedGains = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(totalGains[0]);
+
+
+
 
 
     const Map = dynamic(() => import("../../shared/layout/Map"), {
@@ -142,14 +147,20 @@ export default async function DetailSection({params}: ProductProps){
     });
 
     return(
-        <S.Container>
+        <>
             <Header/>
-            {/* <TableHeader/> */}
-            <Map local={activeLocation} positions={positions}/>
-            <S.Title>Histórico do equipamento</S.Title>
-            <h1>Ganho total: R${totalGains}</h1>
-            <h1>Produtividade: {productivity}%</h1>
-            <TableHistory equipment={product}/>
-        </S.Container>
+            <BackToHomeButton/>
+            <S.Container>
+                <Map local={activeLocation} positions={positions}/>
+                <S.HeaderTableContainer>
+                    <S.Title>Histórico do equipamento</S.Title>
+                    <div>
+                        <p>Ganho total: <strong>{formatedGains}</strong></p>
+                        <p>Produtividade: <strong>{productivity}%</strong></p>
+                    </div>
+                </S.HeaderTableContainer>
+                <TableHistory equipment={product}/>
+            </S.Container>
+        </>
     )
 }
